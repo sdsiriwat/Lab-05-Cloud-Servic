@@ -1,11 +1,13 @@
 import express from 'express'
 import path from 'path';
 import eventRoute from "./routes/EventRoute";
+import uploadfileRoute from './routes/UploadFileRoutes';
 import cors, {CorsOptions} from 'cors';
 
 
 const app = express()
 const port = 3000
+
 
 const corsOptions:CorsOptions = {
     origin: [
@@ -21,6 +23,8 @@ const corsOptions:CorsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use('/events',eventRoute);
+app.use('/uploadfile', uploadfileRoute);
+
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
 })
