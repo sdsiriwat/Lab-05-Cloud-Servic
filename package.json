@@ -2,10 +2,10 @@
   "name": "713-2015-backend-01.basic-type-script-02.backend-architecture-pre-03.service-design",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "tsx src/seed.ts",
+    "build": "prisma generate && tsc",
     "dev": "nodemon"
   },
   "keywords": [],
