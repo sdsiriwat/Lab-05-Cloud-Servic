@@ -27,3 +27,33 @@ export function findByUserId(userId: number) {
     },
   })
 }
+
+export async function registerUser(
+  organizerName: string,
+  username: string,
+  password: string,
+  roleNames: string[],
+) {
+  const roles = await prisma.role.findMany({
+    where: {
+      name: {
+        in: roleNames,
+      },
+    },
+  })
+
+  return prisma.user.create({
+    data: {
+      username,
+      password,
+      roles: {
+        connect: roles.map((role) => ({ id: role.id })),
+      },
+      organizer: {
+        create: {
+          name: organizerName,
+        },
+      },
+    },
+  })
+}

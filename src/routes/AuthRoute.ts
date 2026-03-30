@@ -2,6 +2,8 @@ import express from 'express'
 import * as authService from '../services/AuthService'
 import * as authMiddleware from '../middleware/AuthMiddleware'
 import type { roleModel as role } from '../generated/prisma/models/role'
+import type { RegisterRequest } from '../models/RegisterRequest'
+import { Prisma } from '../generated/prisma/client'
 
 const router = express.Router()
 
@@ -58,6 +60,27 @@ router.post('/admin', authMiddleware.protect, authMiddleware.checkAdmin, async (
     status: 'success',
     message: 'You are an admin',
   })
+})
+
+router.post('/register', async (req, res) => {
+  const registerRequest: RegisterRequest = req.body
+
+  if (!registerRequest.organizerName || !registerRequest.username || !registerRequest.password) {
+    res.status(400).json({ status: 'error', message: 'organizerName, username and password are required' })
+    return
+  }
+
+  try {
+    await authService.registerUser(registerRequest)
+    res.status(201).json({ status: 'success', user: 'User registered successfully' })
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+      res.status(409).json({ status: 'error', message: 'Username already exists' })
+      return
+    }
+
+    res.status(500).json({ status: 'error', message: 'Internal server error' })
+  }
 })
 
 export default router

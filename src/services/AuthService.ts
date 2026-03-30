@@ -1,6 +1,7 @@
 import * as authRepo from '../repositories/AuthRepository'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import type { RegisterRequest } from '../models/RegisterRequest'
 
 export function findByUsername(username: string) {
   return authRepo.findByUsername(username)
@@ -25,4 +26,9 @@ export async function getUserFromToken(token: string) {
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET) as jwt.JwtPayload
   return authRepo.findByUserId(decoded.userId as number)
+}
+
+export function registerUser(registerRequest: RegisterRequest) {
+  const { organizerName, username, password } = registerRequest
+  return authRepo.registerUser(organizerName, username, bcrypt.hashSync(password, 10), ['ROLE_USER'])
 }
