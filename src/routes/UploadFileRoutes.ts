@@ -1,7 +1,11 @@
 import express from 'express';
 import multer from 'multer';
 import { Request, Response } from 'express';
+import dotenv from 'dotenv'
+dotenv.config();
 import { uploadFile, getPresignedUrl } from '../services/UploadFileService';
+
+
 
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -15,8 +19,11 @@ router.post('/uploads', upload.single('file'), async (req: Request, res: Respons
       return res.status(400).send('No file uploaded.');
     }
 
-    const bucket = 'images';
-    const filePath = `uploads`;
+    const bucket = process.env.SUPABASE_BUCKET_NAME;
+    const filePath = process.env.UPLOAD_DIR;
+    if (!bucket || !filePath) {
+      return res.status(500).send('Bucket name or file path not configured.');
+    }
     const fileKey = await uploadFile(bucket, filePath, file);
 
     res.status(200).json({ status: 'success',
@@ -34,7 +41,11 @@ router.get('/presignedUrl', async (req: Request, res: Response) => {
         if (!key || typeof key !== 'string') {
             return res.status(400).send('File key is required.');
         }        
-        const bucket = 'images';
+        const bucket = process.env.SUPABASE_BUCKET_NAME;
+        const filePath = process.env.UPLOAD_DIR;
+        if (!bucket || !filePath) {
+            return res.status(500).send('Bucket name or file path not configured.');
+        }
         const presignedUrl = await getPresignedUrl(bucket, key, 3600);
         res.status(200).json({ url: presignedUrl });
    } catch (error) {
