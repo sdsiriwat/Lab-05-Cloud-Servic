@@ -79,6 +79,56 @@ export async function createEvents() {
             time: "12:00",
             petsAllowed: true,
             organizer: cmuOrg
+        },
+        {
+            category: "Art",
+            title: "Modern Art Exhibition",
+            description: "Contemporary art from around the world",
+            location: "New York",
+            date: "2021-12-01",
+            time: "10:00",
+            petsAllowed: false,
+            organizer: camtOrg
+        },
+        {
+            category: "Technology",
+            title: "Tech Conference 2021",
+            description: "Innovations in software and hardware",
+            location: "San Jose",
+            date: "2021-12-10",
+            time: "09:00",
+            petsAllowed: false,
+            organizer: chiangMaiOrg
+        },
+        {
+            category: "Dance",
+            title: "Ballet Performance",
+            description: "Classical ballet by professional dancers",
+            location: "Boston",
+            date: "2021-12-15",
+            time: "19:30",
+            petsAllowed: false,
+            organizer: cmuOrg
+        },
+        {
+            category: "Sports",
+            title: "Marathon Race",
+            description: "Annual city marathon event",
+            location: "Chicago",
+            date: "2022-01-09",
+            time: "08:00",
+            petsAllowed: true,
+            organizer: chiangMaiOrg
+        },
+        {
+            category: "Community",
+            title: "Book Club Meetup",
+            description: "Monthly book discussion and networking",
+            location: "Seattle",
+            date: "2022-01-15",
+            time: "18:00",
+            petsAllowed: false,
+            organizer: camtOrg
         }
     ];
 

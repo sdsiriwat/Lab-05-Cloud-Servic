@@ -1,5 +1,4 @@
 {
-
   "compilerOptions": {
     // File Layout
     "rootDir": "./src",
@@ -8,8 +7,8 @@
     "moduleResolution": "node",
     "target": "ES2023",
     "strict": true,
-    "esModuleInterop": true,
-    "ignoreDeprecations": "6.0"
-  }
-
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "prisma", "prisma.config.ts"]
 }
