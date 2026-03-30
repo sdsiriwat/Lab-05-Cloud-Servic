@@ -57,3 +57,14 @@ export async function registerUser(
     },
   })
 }
+
+export async function updatePassword(userId: number, password: string) {
+  return prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password,
+    },
+  })
+}
