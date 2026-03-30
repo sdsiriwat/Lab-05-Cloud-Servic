@@ -17,3 +17,12 @@ export function generatetoken(userId: number) {
 
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '5h' })
 }
+
+export async function getUserFromToken(token: string) {
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET is not defined')
+  }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET) as jwt.JwtPayload
+  return authRepo.findByUserId(decoded.userId as number)
+}
