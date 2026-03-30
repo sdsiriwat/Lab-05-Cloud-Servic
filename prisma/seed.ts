@@ -6,9 +6,19 @@ const seedData = async ()=> {
     await prisma.participant.deleteMany();
     await prisma.event.deleteMany();
     await prisma.organizer.deleteMany();
+    await prisma.user.deleteMany();
+    await prisma.role.deleteMany();
     await createEvents();
     await createParticipants()
 }
 
-await seedData();
+seedData()
+    .then(() => {
+        console.log('Database seeded successfully');
+        process.exit(0);
+    })
+    .catch((error) => {
+        console.error('Error seeding database:', error);
+        process.exit(1);
+    });
 

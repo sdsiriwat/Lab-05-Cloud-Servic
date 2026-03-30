@@ -1,9 +1,12 @@
 import express from 'express'
+import dotenv from 'dotenv'
 import path from 'path';
 import eventRoute from "./routes/EventRoute";
 import uploadfileRoute from './routes/UploadFileRoutes';
+import authRoute from './routes/AuthRoute';
 import cors, {CorsOptions} from 'cors';
 
+dotenv.config()
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -24,6 +27,7 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use('/events',eventRoute);
 app.use('/uploadfile', uploadfileRoute);
+app.use('/api/v1/auth', authRoute);
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
